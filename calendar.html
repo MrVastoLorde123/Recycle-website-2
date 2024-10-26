@@ -4,14 +4,529 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recycle-Suriname</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root{
+            --suriname-green: #377E3F;
+            --suriname-white: #FFFFFF;
+            --suriname-red: #B40A2D;
+            --gray-100: #f8f8f8;
+            --gray-200: #eee;
+            --gray-300: #ddd;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --navbar-height: 70px;
+        }
+        
+        
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body{
+            background-color: var(--gray-100);
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            padding-top: var(--navbar-height);
+        }
+        .navbar{
+            background-color: var(--suriname-white);
+            height: var(--navbar-height);
+            padding: 0 2rem;
+            box-shadow: var(--shadow-sm);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .icon {
+            flex-shrink: 0;
+        }
+        
+        .logo{
+            color: #47e947;
+            font-size: 40px;
+            font-family: Arial;
+            padding-left: 20px;
+            float: left;
+            padding-top: 10px;
+        }
+        .menu {
+            flex-grow: 1;
+            margin-left: 2rem;
+        }
+        
+        .menu ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            gap: 2rem;
+        }
+        
+        .menu a {
+            text-decoration: none;
+            color: var(--suriname-green);
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu a:hover {
+            background-color: var(--suriname-green);
+            color: var(--suriname-white);
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            padding: 2rem;
+            margin: 0 auto;
+            max-width: 1200px;
+            width: 90%;
+            min-height: calc(100vh - var(--navbar-height));
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Calendar Container */
+        .calendar-container {
+            background-color: var(--suriname-white);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            padding: 2rem;
+            flex-grow: 1;
+            margin-top: 1rem;
+        }
+        
+        /* Calendar Header */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .calendar-header h2 {
+            font-size: 1.8rem;
+            color: var(--suriname-green);
+        }
+        
+        .calendar-nav-btn {
+            background: var(--suriname-green);
+            color: var(--suriname-white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            font-size: 1rem;
+        }
+        
+        .calendar-nav-btn:hover {
+            opacity: 0.9;
+        }
+        
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--gray-200);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.1rem;
+            min-height: 60px;
+            background-color: var(--suriname-white);
+        }
+        
+        .calendar-day:hover {
+            background-color: var(--gray-100);
+        }
+        
+        .calendar-day.has-event {
+            background-color: var(--suriname-green);
+            color: var(--suriname-white);
+        }
+        
+        .calendar-day.today {
+            border: 2px solid var(--suriname-red);
+            font-weight: bold;
+        }
+        
+        /* Reminder Form */
+        .reminder-form {
+            background-color: var(--gray-100);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .reminder-form h3 {
+            margin-bottom: 1.5rem;
+            color: var(--suriname-green);
+            font-size: 1.4rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-input {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .submit-button {
+            background-color: var(--suriname-green);
+            color: var(--suriname-white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: opacity 0.3s;
+        }
+        
+        .submit-button:hover {
+            opacity: 0.9;
+        }
+        
+        /* Reminders List */
+        .reminders-list {
+            margin-top: 2rem;
+        }
+        
+        .reminders-list h3 {
+            margin-bottom: 1.5rem;
+            color: var(--suriname-green);
+            font-size: 1.4rem;
+        }
+        
+        .reminder-item {
+            display: flex;
+            align-items: center;
+            padding: 1.25rem;
+            background-color: var(--gray-100);
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+            transition: transform 0.3s;
+        }
+        
+        .reminder-item:hover {
+            transform: translateX(4px);
+        }
+        
+        .reminder-icon {
+            margin-right: 1.5rem;
+            font-size: 1.8rem;
+        }
+                        /* Mobile-First Media Queries */
+        @media (max-width: 768px) {
+            /* Navbar Improvements */
+            .navbar {
+                height: auto;
+                padding: 0.5rem;
+                flex-direction: column;
+            }
+
+            .icon {
+                margin-bottom: 0.5rem;
+            }
+
+            .menu {
+                width: 100%;
+                margin: 0;
+            }
+
+            .menu ul {
+                flex-direction: column;
+                align-items: center;
+                padding: 0.5rem 0;
+                gap: 0.5rem;
+            }
+
+            .menu a {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 0.75rem;
+                background-color: var(--gray-100);
+            }
+
+            body {
+                padding-top: 200px; /* Adjust for taller mobile navbar */
+            }
+
+            /* Calendar Improvements */
+            .main-content {
+                padding: 1rem;
+                width: 100%;
+            }
+
+            .calendar-container {
+                padding: 1rem;
+                margin-top: 0;
+            }
+
+            .calendar-header {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0;
+                justify-content: center;
+            }
+
+            .calendar-header h2 {
+                font-size: 1.4rem;
+                width: 100%;
+                text-align: center;
+                order: -1;
+                margin-bottom: 0.5rem;
+            }
+
+            .calendar-nav-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            /* Calendar Grid Improvements */
+            .calendar-grid {
+                gap: 0.25rem;
+                padding: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .calendar-day {
+                min-height: 40px;
+                font-size: 0.9rem;
+                padding: 0.25rem;
+            }
+
+            /* Form Improvements */
+            .reminder-form {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+
+            .form-grid {
+                gap: 1rem;
+            }
+
+            .form-input {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .submit-button {
+                width: 100%;
+                padding: 0.75rem;
+            }
+
+            /* Reminders List Improvements */
+            .reminders-list {
+                margin-top: 1rem;
+            }
+
+            .reminder-item {
+                padding: 0.75rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .reminder-icon {
+                font-size: 1.5rem;
+                margin-right: 1rem;
+            }
+
+            .reminder-item button {
+                width: 100%;
+                margin-top: 0.5rem;
+                margin-left: 0 !important;
+            }
+        }
+
+        /* Small Mobile Devices */
+        @media (max-width: 380px) {
+            body {
+                padding-top: 180px;
+            }
+
+            .calendar-day {
+                min-height: 35px;
+                font-size: 0.8rem;
+            }
+
+            .calendar-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .reminder-form h3,
+            .reminders-list h3 {
+                font-size: 1.2rem;
+            }
+
+            .form-input {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Landscape Mode Improvements */
+        @media (max-width: 768px) and (orientation: landscape) {
+            body {
+                padding-top: 160px;
+            }
+
+            .calendar-grid {
+                gap: 0.15rem;
+            }
+
+            .calendar-day {
+                min-height: 45px;
+            }
+
+            .menu ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .menu a {
+                width: auto;
+                padding: 0.5rem 1rem;
+            }
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Medium Sized Devices */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .calendar-container {
+                padding: 1.5rem;
+            }
+
+            .calendar-day {
+                min-height: 50px;
+            }
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Add these utility classes */
+        .hidden-mobile {
+            display: none !important;
+        }
+
+        @media (min-width: 769px) {
+            .hidden-mobile {
+                display: block !important;
+            }
+        }
+
+        .text-truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Enhanced Touch Interactions */
+        @media (hover: none) {
+            .calendar-day,
+            .menu a,
+            .calendar-nav-btn,
+            .submit-button,
+            .reminder-item button {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .calendar-day:active,
+            .menu a:active,
+            .calendar-nav-btn:active,
+            .submit-button:active,
+            .reminder-item button:active {
+                transform: scale(0.95);
+            }
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+        
+            .menu {
+                margin-left: 0;
+                margin-top: 1rem;
+                width: 100%;
+            }
+        
+            .menu ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        
+            .main-content {
+                width: 95%;
+                padding: 1rem;
+            }
+        
+            .calendar-container {
+                padding: 1rem;
+            }
+        
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        
+            .calendar-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        
+            .calendar-day {
+                min-height: 40px;
+                font-size: 0.9rem;
+            }
+        
+            body {
+                padding-top: 180px; /* Adjust for collapsed navbar */
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="main"></div>
         <div class="navbar">
             <div class="icon">
                 <h2 class="logo">RCL-Suri</h2>
             </div>
-
             <div class="menu">
                 <ul>
                     <li><a href="index.html">HOME</a></li>
@@ -21,199 +536,8 @@
                     <li><a href="about.html">ABOUT US</a></li>
                 </ul>
             </div>
-            <!DOCTYPE html>
-    <style>
-        :root {
-            --suriname-green: #377E3F;
-            --suriname-white: #FFFFFF;
-            --suriname-red: #B40A2D;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-
-        body {
-            background-color: #f5f5f5;
-        }
-
-        .header {
-            background-color: var(--suriname-green);
-            color: var(--suriname-white);
-            padding: 1rem;
-            text-align: center;
-            border-bottom: 4px solid var(--suriname-red);
-        }
-
-        .nav-bar {
-            background-color: var(--suriname-white);
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .nav-bar ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-        }
-
-        .nav-bar a {
-            text-decoration: none;
-            color: var(--suriname-green);
-            font-weight: bold;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .nav-bar a:hover {
-            background-color: var(--suriname-green);
-            color: var(--suriname-white);
-        }
-
-        .main-content {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .calendar-container {
-            background-color: var(--suriname-white);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 2rem;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            color: var(--suriname-green);
-        }
-
-        .calendar-nav-btn {
-            background: var(--suriname-green);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .calendar-day:hover {
-            background-color: #f0f0f0;
-        }
-
-        .calendar-day.has-event {
-            background-color: var(--suriname-green);
-            color: var(--suriname-white);
-        }
-
-        .calendar-day.today {
-            border: 2px solid var(--suriname-red);
-        }
-
-        .reminder-form {
-            background-color: #f8f8f8;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .form-input {
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 100%;
-        }
-
-        .submit-button {
-            background-color: var(--suriname-green);
-            color: var(--suriname-white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .reminders-list {
-            margin-top: 2rem;
-        }
-
-        .reminder-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background-color: #f8f8f8;
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-        }
-
-        .reminder-icon {
-            margin-right: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .footer {
-            background-color: var(--suriname-green);
-            color: var(--suriname-white);
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 3rem;
-            border-top: 4px solid var(--suriname-red);
-        }
-
-        @media (max-width: 768px) {
-            .nav-bar ul {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    
-    <header class="header">
-        <h1>Suriname Recycling Calendar</h1>
-        <p>Together for a Cleaner Future</p>
-    </header>
-
+        </div>
+    </div>
     <main class="main-content">
         <div class="calendar-container">
             <div class="calendar-header">
@@ -253,29 +577,35 @@
         </div>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2024 Suriname Recycling Initiative. All rights reserved.</p>
-    </footer>
-
     <script>
         // Calendar state
         let currentDate = new Date();
-        let reminders = [
-            { 
-                date: '2024-10-26', 
-                type: 'paper',
-                recurring: 'weekly',
-                description: 'Paper recycling pickup',
-                icon: '📄'
-            },
-            {
-                date: '2024-10-28',
-                type: 'plastic',
-                recurring: 'biweekly',
-                description: 'Plastic recycling pickup',
-                icon: '🥤'
-            }
-        ];
+        let selectedDate = null;
+        let reminders = [];
+
+        // Load saved reminders from localStorage if available
+        const savedReminders = localStorage.getItem('recyclingReminders');
+        if (savedReminders) {
+            reminders = JSON.parse(savedReminders);
+        } else {
+            // Default reminders if none saved
+            reminders = [
+                { 
+                    date: '2024-10-26', 
+                    type: 'paper',
+                    recurring: 'weekly',
+                    description: 'Paper recycling pickup',
+                    icon: '📄'
+                },
+                {
+                    date: '2024-10-28',
+                    type: 'plastic',
+                    recurring: 'biweekly',
+                    description: 'Plastic recycling pickup',
+                    icon: '🥤'
+                }
+            ];
+        }
 
         const recyclingTypes = {
             paper: { color: '#e3f2fd', icon: '📄' },
@@ -288,6 +618,7 @@
         function generateCalendar(date) {
             const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
             const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            const today = new Date();
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
 
@@ -296,22 +627,44 @@
             days.forEach(day => {
                 const dayHeader = document.createElement('div');
                 dayHeader.className = 'calendar-day';
+                dayHeader.style.fontWeight = 'bold';
+                dayHeader.style.backgroundColor = '#f8f9fa';
                 dayHeader.textContent = day;
                 grid.appendChild(dayHeader);
             });
 
-            // Add days
+            // Fill in empty days at start of month
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                emptyDay.style.backgroundColor = '#f8f9fa';
+                grid.appendChild(emptyDay);
+            }
+
+            // Add month days
             for (let i = 1; i <= lastDay.getDate(); i++) {
                 const dayDiv = document.createElement('div');
                 const currentDay = new Date(date.getFullYear(), date.getMonth(), i);
                 dayDiv.className = 'calendar-day';
                 dayDiv.textContent = i;
 
+                // Highlight today
+                if (currentDay.toDateString() === today.toDateString()) {
+                    dayDiv.classList.add('today');
+                }
+
                 // Check if day has reminder
                 const dateString = currentDay.toISOString().split('T')[0];
                 if (reminders.some(r => r.date === dateString)) {
                     dayDiv.classList.add('has-event');
                 }
+
+                // Add click event to select date
+                dayDiv.addEventListener('click', () => {
+                    selectedDate = dateString;
+                    document.getElementById('reminderDate').value = dateString;
+                    highlightSelectedDate();
+                });
 
                 grid.appendChild(dayDiv);
             }
@@ -321,51 +674,100 @@
                 date.toLocaleString('default', { month: 'long', year: 'numeric' });
         }
 
+        function highlightSelectedDate() {
+            // Remove previous selection
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.style.border = '1px solid var(--gray-200)';
+            });
+
+            // Highlight selected date
+            if (selectedDate) {
+                const days = document.querySelectorAll('.calendar-day');
+                const dayNum = new Date(selectedDate).getDate();
+                days.forEach(day => {
+                    if (day.textContent === dayNum.toString()) {
+                        day.style.border = '2px solid var(--suriname-green)';
+                    }
+                });
+            }
+        }
+
         function addReminder() {
             const date = document.getElementById('reminderDate').value;
             const type = document.getElementById('reminderType').value;
             const recurring = document.getElementById('reminderRecurring').value;
             const description = document.getElementById('reminderDescription').value;
 
-            if (date && description) {
-                reminders.push({
-                    date,
-                    type,
-                    recurring,
-                    description,
-                    icon: recyclingTypes[type].icon
-                });
-
-                updateReminders();
-                generateCalendar(currentDate);
-                clearForm();
+            if (!date || !description) {
+                alert('Please fill in both date and description');
+                return;
             }
+
+            const newReminder = {
+                date,
+                type,
+                recurring,
+                description,
+                icon: recyclingTypes[type].icon
+            };
+
+            reminders.push(newReminder);
+
+            // Save to localStorage
+            localStorage.setItem('recyclingReminders', JSON.stringify(reminders));
+
+            updateReminders();
+            generateCalendar(currentDate);
+            clearForm();
         }
 
         function updateReminders() {
             const list = document.getElementById('remindersList');
             list.innerHTML = '<h3>Upcoming Recycling Schedule</h3>';
 
-            reminders
-                .sort((a, b) => new Date(a.date) - new Date(b.date))
-                .forEach(reminder => {
-                    const div = document.createElement('div');
-                    div.className = 'reminder-item';
-                    div.style.backgroundColor = recyclingTypes[reminder.type].color;
-                    
-                    div.innerHTML = `
-                        <span class="reminder-icon">${reminder.icon}</span>
-                        <div>
-                            <div style="font-weight: bold">${reminder.description}</div>
-                            <div style="font-size: 0.875rem">
-                                ${new Date(reminder.date).toLocaleDateString()} - 
-                                ${reminder.recurring !== 'none' ? `Recurring ${reminder.recurring}` : 'One-time'}
-                            </div>
+            const today = new Date();
+            const upcomingReminders = reminders
+                .filter(reminder => new Date(reminder.date) >= today)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            if (upcomingReminders.length === 0) {
+                list.innerHTML += '<p>No upcoming reminders</p>';
+                return;
+            }
+
+            upcomingReminders.forEach(reminder => {
+                const div = document.createElement('div');
+                div.className = 'reminder-item';
+                div.style.backgroundColor = recyclingTypes[reminder.type].color;
+                
+                div.innerHTML = `
+                    <span class="reminder-icon">${reminder.icon}</span>
+                    <div>
+                        <div style="font-weight: bold">${reminder.description}</div>
+                        <div style="font-size: 0.875rem">
+                            ${new Date(reminder.date).toLocaleDateString()} - 
+                            ${reminder.recurring !== 'none' ? `Recurring ${reminder.recurring}` : 'One-time'}
                         </div>
-                    `;
-                    
-                    list.appendChild(div);
-                });
+                    </div>
+                    <button 
+                        onclick="deleteReminder('${reminder.date}', '${reminder.description}')"
+                        style="margin-left: auto; padding: 0.5rem; background: var(--suriname-red); color: white; border: none; border-radius: 4px; cursor: pointer;"
+                    >
+                        Delete
+                    </button>
+                `;
+                
+                list.appendChild(div);
+            });
+        }
+
+        function deleteReminder(date, description) {
+            reminders = reminders.filter(r => 
+                !(r.date === date && r.description === description)
+            );
+            localStorage.setItem('recyclingReminders', JSON.stringify(reminders));
+            updateReminders();
+            generateCalendar(currentDate);
         }
 
         function clearForm() {
@@ -373,6 +775,8 @@
             document.getElementById('reminderType').value = 'paper';
             document.getElementById('reminderRecurring').value = 'none';
             document.getElementById('reminderDescription').value = '';
+            selectedDate = null;
+            highlightSelectedDate();
         }
 
         // Event listeners

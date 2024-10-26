@@ -5,14 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recycle-Suriname</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Main Content */
+        .main-content {
+            padding: 5rem 2rem 2rem;
+        }
+
+        .info-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-section h2 {
+            color: #377E3F;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1rem;
+            position: relative;
+        }
+
+        .info-item h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #377E3F;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .info-item p {
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .info-item.active p {
+            display: block;
+        }
+
+        .toggle-btn {
+            background: #377E3F;
+            color: #fff;
+            border: none;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: #2e6531;
+        }
+    </style>
 </head>
 <body>
     <div class="main">
         <div class="navbar">
-            <div class="icon">
-                <h2 class="logo">RCL-Suri</h2>
-            </div>
-
+            <h2 class="logo">RCL-Suri</h2>
             <div class="menu">
                 <ul>
                     <li><a href="index.html">HOME</a></li>
@@ -22,28 +79,38 @@
                     <li><a href="about.html">ABOUT US</a></li>
                 </ul>
             </div>
-            <div class="search">
-                <input class="srch" type="search" name="" placeholder="Type to text">
-                <a href="#"> <button class="btn">Search</button></a>
-            </div>
+        </div>
 
-    <main>
-        <h2>What Can You Recycle?</h2>
+    <main class="main-content">
         <section class="info-section">
+            <h2>What Can You Recycle?</h2>
             <div class="info-item">
-                <h3>Plastics</h3>
-                <p>Check your local guidelines for what plastics can be recycled. Common recyclable plastics include water bottles and containers.</p>
+                <h3>Plastics <button class="toggle-btn">More Info</button></h3>
+                <p>Recyclable plastics often include items like water bottles, milk jugs, and certain types of containers. Ensure they're clean and dry before recycling.</p>
             </div>
             <div class="info-item">
-                <h3>Paper</h3>
-                <p>Most paper products are recyclable, including newspapers, magazines, and cardboard. Be sure to remove contaminants like food residue.</p>
+                <h3>Paper <button class="toggle-btn">More Info</button></h3>
+                <p>Common recyclable paper products include newspapers, magazines, and cardboard. Remove any food residue to avoid contamination.</p>
             </div>
             <div class="info-item">
-                <h3>Metals</h3>
-                <p>Aluminum cans, tin cans, and metal lids can usually be recycled. Check with local facilities for more detailed instructions.</p>
+                <h3>Metals <button class="toggle-btn">More Info</button></h3>
+                <p>Items like aluminum cans, tin cans, and metal lids are typically recyclable. Check with local facilities for special recycling instructions.</p>
+            </div>
+            <div class="info-item">
+                <h3>Glass <button class="toggle-btn">More Info</button></h3>
+                <p>Clear, green, and brown glass containers are usually accepted. Rinse them to remove residue, as food contamination can impact recycling.</p>
             </div>
         </section>
     </main>
+
+    <script>
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const infoItem = button.parentElement.parentElement;
+                infoItem.classList.toggle('active');
+            });
+        });
+    </script>
 
 </body>
 </html>

@@ -10,4 +10,3 @@ document.getElementById('form').addEventListener('submit', function(event) {
         alert("Invalid username or password.");
     }
 });
-
