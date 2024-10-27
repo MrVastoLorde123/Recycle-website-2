@@ -93,10 +93,10 @@ body{
 }
 
 .logo{
-    color: #47e947;
-    font-size: 40px;
-    font-family: Arial;
-    padding-left: 20px;
+    color: var(--suriname-green);
+    font-size: 35px;
+    font-family: 'Times New Roman';
+    padding-left: 15px;
     float: left;
     padding-top: 10px;
 }
@@ -291,7 +291,7 @@ body{
     /*Normal Screen*/
 
     .navbar{
-        width: 100%;
+        width: 100vw;
         height: 100px;
     }
     ul{
@@ -303,19 +303,7 @@ body{
     ul li a{
        font-size: 1.6vw; 
     }
-    .search{
-        margin-top: 3px;
-        margin-left: 290px;
-    }
-    .srch{
-        height: 40px;
-        width: 190px;
-        font-size: 14px;
-    }
-    .btn{
-        height:40px;
-        width: 80px;
-    }
+    
     .content{
         width: 100%;
     }
@@ -336,45 +324,6 @@ body{
     }
 }
 
-@media screen and (max-width:1170px) {
-    /*Login-box*/
-    .main{
-        padding-left: 20px;
-        height: 180vh;
-    }
-    .form{
-        margin-left: -30px;
-        width: 250px;
-        height: 370px;
-        background: linear-gradient(to top, rgba(0,0,0,0.8)50%,rgba(0,0,0,0.8)50%);
-        position: absolute;
-        top: 420px;
-        left: 50px;
-        transform: translate(0%,-5%);
-        border-radius: 10px;
-        padding: 25px;
-    }
-    .form input{
-        width: 240px;
-        height: 35px;
-        background: transparent;
-        border-bottom: 1px solid #ff7200;
-        border-top: none;
-        border-right: none;
-        border-left: none;
-        color: #fff;
-        font-size: 15px;
-        letter-spacing: 1px;
-        margin-top: 30px;
-        font-family: sans-serif;
-    }
-    .btnn a{
-        font-size: 16px;
-    }
-    .form .link a{
-        font-size: 16px;
-    }
-}
 
 @media screen and (max-width: 830px){
     /*For tablet*/
@@ -417,19 +366,6 @@ body{
     }
     ul li a{
        font-size: 2vw; 
-    }
-    .search{
-        margin-top: -20px;
-        margin-left: 60px;   
-    }   
-    .srch{
-        height: 30px;
-        width: 160px;
-        font-size: 12px;
-    }
-    .btn{
-        height:30px;
-        width: 70px;
     }
     .main{
         padding-left: 20px;
@@ -511,9 +447,4 @@ body{
     ul li a{
         font-size: 2vw;
     }  
-    .search{
-        margin-top: -40px;
-        margin-left: 38px;
-    } 
-
 }
